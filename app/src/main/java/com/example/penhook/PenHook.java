@@ -308,6 +308,7 @@ public class PenHook implements IXposedHookLoadPackage {
         @Override public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback callback) { return original.onWindowStartingActionMode(callback); }
         @Override public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback callback, int type) { return original.onWindowStartingActionMode(callback, type); }
         @Override public boolean dispatchPopulateAccessibilityEvent(android.view.accessibility.AccessibilityEvent event) { return original.dispatchPopulateAccessibilityEvent(event); }
+        @Override public boolean dispatchKeyShortcutEvent(android.view.KeyEvent event) { return original.dispatchKeyShortcutEvent(event); }
     }
 
     private void log(String msg) {
