@@ -169,17 +169,6 @@ public class PenHook implements IXposedHookLoadPackage {
                 }
             });
 
-            XposedHelpers.findAndHookMethod(Window.class, "getCallback", 
-                new XC_MethodHook() {
-                @Override
-                protected void afterHookedMethod(MethodHookParam param) {
-                    Window.Callback original = (Window.Callback) param.getResult();
-                    if (original != null && !(original instanceof StylusCallbackProxy)) {
-                        param.setResult(new StylusCallbackProxy(original));
-                    }
-                }
-            });
-
         } catch (Exception e) {
             logE("GameApp hook failed", e);
         }
@@ -266,49 +255,6 @@ public class PenHook implements IXposedHookLoadPackage {
         } catch (Exception e) {
             logE("Enable stylus for window failed", e);
         }
-    }
-
-    private static class StylusCallbackProxy implements Window.Callback {
-        private final Window.Callback original;
-
-        StylusCallbackProxy(Window.Callback original) {
-            this.original = original;
-        }
-
-        @Override
-        public boolean dispatchTouchEvent(MotionEvent event) {
-            return original.dispatchTouchEvent(event);
-        }
-
-        @Override
-        public boolean dispatchTrackballEvent(MotionEvent event) {
-            return original.dispatchTrackballEvent(event);
-        }
-
-        @Override
-        public boolean dispatchGenericMotionEvent(MotionEvent event) {
-            return original.dispatchGenericMotionEvent(event);
-        }
-
-        @Override public void onWindowAttributesChanged(android.view.WindowManager.LayoutParams attrs) { original.onWindowAttributesChanged(attrs); }
-        @Override public void onContentChanged() { original.onContentChanged(); }
-        @Override public void onWindowFocusChanged(boolean hasFocus) { original.onWindowFocusChanged(hasFocus); }
-        @Override public void onAttachedToWindow() { original.onAttachedToWindow(); }
-        @Override public void onDetachedFromWindow() { original.onDetachedFromWindow(); }
-        @Override public void onPanelClosed(int featureId, android.view.Menu menu) { original.onPanelClosed(featureId, menu); }
-        @Override public boolean onCreatePanelMenu(int featureId, android.view.Menu menu) { return original.onCreatePanelMenu(featureId, menu); }
-        @Override public android.view.View onCreatePanelView(int featureId) { return original.onCreatePanelView(featureId); }
-        @Override public boolean onPreparePanel(int featureId, android.view.View view, android.view.Menu menu) { return original.onPreparePanel(featureId, view, menu); }
-        @Override public boolean onMenuOpened(int featureId, android.view.Menu menu) { return original.onMenuOpened(featureId, menu); }
-        @Override public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) { return original.onMenuItemSelected(featureId, item); }
-        @Override public void onActionModeStarted(android.view.ActionMode mode) { original.onActionModeStarted(mode); }
-        @Override public void onActionModeFinished(android.view.ActionMode mode) { original.onActionModeFinished(mode); }
-        @Override public boolean onSearchRequested(android.view.SearchEvent searchEvent) { return original.onSearchRequested(searchEvent); }
-        @Override public boolean onSearchRequested() { return original.onSearchRequested(); }
-        @Override public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback callback) { return original.onWindowStartingActionMode(callback); }
-        @Override public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback callback, int type) { return original.onWindowStartingActionMode(callback, type); }
-        @Override public boolean dispatchPopulateAccessibilityEvent(android.view.accessibility.AccessibilityEvent event) { return original.dispatchPopulateAccessibilityEvent(event); }
-        @Override public boolean dispatchKeyShortcutEvent(android.view.KeyEvent event) { return original.dispatchKeyShortcutEvent(event); }
     }
 
     private void log(String msg) {
