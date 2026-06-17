@@ -11,11 +11,11 @@
 
         <meta-data
             android:name="xposeddescription"
-            android:value="解除小米平板游戏模式对触控笔的屏蔽 (API 101)" />
+            android:value="解除小米平板游戏模式对触控笔的屏蔽" />
 
         <meta-data
             android:name="xposedminversion"
-            android:value="101" />
+            android:value="82" />
 
         <meta-data
             android:name="xposedscope"
